@@ -995,9 +995,14 @@ public class SwerveDrive
       // If the robot isn't moving synchronize the encoders every 100ms (Inspired by democrat's SDS
       // lib)
       // To ensure that everytime we initialize it works.
-      if (sumVelocity <= .01 && ++moduleSynchronizationCounter > 5)
+      if (sumVelocity <= .01)
       {
-        synchronizeModuleEncoders();
+        if (++moduleSynchronizationCounter >= 5) {
+          synchronizeModuleEncoders();
+          moduleSynchronizationCounter = 0;
+        }
+      } else
+      {
         moduleSynchronizationCounter = 0;
       }
 
