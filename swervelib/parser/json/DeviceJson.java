@@ -73,8 +73,10 @@ public class DeviceJson
       case "sparkmax_analog":
         return new SparkMaxAnalogEncoderSwerve(motor);
       case "canandmag":
+      case "canandcoder":
         return new SparkMaxEncoderSwerve(motor, 360);
       case "canandmag_can":
+      case "canandcoder_can":
         return new CanAndMagSwerve(id);
       case "ctre_mag":
       case "rev_hex":
