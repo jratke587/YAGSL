@@ -163,6 +163,7 @@ public class TalonFXSwerve extends SwerveMotor
     TalonFXConfigurator cfg = motor.getConfigurator();
     cfg.refresh(configuration);
 
+    positionConversionFactor = 1 / positionConversionFactor;
     if (isDriveMotor) 
     {
       unitConversionFactor = 1;
@@ -171,7 +172,7 @@ public class TalonFXSwerve extends SwerveMotor
       unitConversionFactor = 360;
       positionConversionFactor *= 360;
     }
-    conversionFactor = 1 / positionConversionFactor;
+    conversionFactor = positionConversionFactor;
 
     configuration.MotionMagic.withMotionMagicCruiseVelocity(100.0 / positionConversionFactor)
                               .withMotionMagicAcceleration((100.0 / positionConversionFactor) / 0.100)
@@ -395,7 +396,7 @@ public class TalonFXSwerve extends SwerveMotor
   @Override
   public double getVelocity()
   {
-    return motor.getVelocity().getValue();
+    return motor.getVelocity().getValue() * unitConversionFactor;
   }
 
   /**
