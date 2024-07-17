@@ -356,9 +356,9 @@ public class SwerveModule
     if (absoluteEncoder != null && synchronizeEncoderQueued)
     {
       double absoluteEncoderPosition = getAbsolutePosition();
-      double relativeEncoderPosition = SwerveMath.normalizeAngle(angleMotor.getPosition());
+      double relativeEncoderPosition = SwerveMath.placeInAppropriate0To360Scope(180, angleMotor.getPosition());
       //Only apply changes if the angle motor has become desynced from the encoder by more than 0.5 degrees
-      if (Math.abs(absoluteEncoderPosition - relativeEncoderPosition) > 0.5) {
+      if (Math.abs(absoluteEncoderPosition - relativeEncoderPosition) > 1 && angleMotor.getVelocity() < 0.05) {
         angleMotor.setPosition(absoluteEncoderPosition);
       }
       synchronizeEncoderQueued = false;
